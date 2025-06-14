@@ -1,16 +1,16 @@
 import { useExists, useJson } from '@artifact/client/hooks'
 import { accountDataSchema, type AccountData } from '../types/account.ts'
-import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 
 const useAccountData = () => {
   const exists = useExists('profile.json')
   const raw = useJson('profile.json')
-  const [data, setData] = useState<AccountData>()
-
-  useEffect(() => {
+  
+  const data = useMemo(() => {
     if (raw !== undefined) {
-      setData(accountDataSchema.parse(raw))
+      return accountDataSchema.parse(raw)
     }
+    return undefined
   }, [raw])
 
   const loading = exists === null || (exists && raw === undefined)

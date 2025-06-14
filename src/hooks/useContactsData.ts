@@ -1,16 +1,16 @@
 import { useExists, useJson } from '@artifact/client/hooks'
 import { contactsDataSchema, type ContactsData } from '../types/contacts.ts'
-import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 
 const useContactsData = () => {
   const exists = useExists('contacts.json')
   const raw = useJson('contacts.json')
-  const [data, setData] = useState<ContactsData>()
-
-  useEffect(() => {
+  
+  const data = useMemo(() => {
     if (raw !== undefined) {
-      setData(contactsDataSchema.parse(raw))
+      return contactsDataSchema.parse(raw)
     }
+    return undefined
   }, [raw])
 
   const loading = exists === null || (exists && raw === undefined)
