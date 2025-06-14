@@ -1,16 +1,16 @@
-interface ContactAvatarProps {
+interface AgentAvatarProps {
   name: string
   avatar?: string
   isOnline?: boolean
   size?: 'sm' | 'md' | 'lg'
 }
 
-const ContactAvatar = ({
+const AgentAvatar = ({
   name,
   avatar,
   isOnline,
   size = 'md'
-}: ContactAvatarProps) => {
+}: AgentAvatarProps) => {
   const sizeClasses = {
     sm: 'w-8 h-8 text-xs',
     md: 'w-12 h-12 text-sm',
@@ -48,4 +48,4 @@ const ContactAvatar = ({
   )
 }
 
-export default ContactAvatar
+export default AgentAvatar

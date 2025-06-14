@@ -1,13 +1,13 @@
 import { Phone, Mail, MessageCircle } from 'lucide-react'
-import ContactAvatar from './ContactAvatar'
-import type { Contact } from '../types/contacts'
+import AgentAvatar from './AgentAvatar'
+import type { Agent } from '../types/agents'
 
-interface ContactItemProps {
-  contact: Contact
-  onClick?: (contact: Contact) => void
+interface AgentItemProps {
+  agent: Agent
+  onClick?: (agent: Agent) => void
 }
 
-const ContactItem = ({ contact, onClick }: ContactItemProps) => {
+const AgentItem = ({ agent, onClick }: AgentItemProps) => {
   const formatLastSeen = (lastSeen: string) => {
     const date = new Date(lastSeen)
     const now = new Date()
@@ -15,7 +15,7 @@ const ContactItem = ({ contact, onClick }: ContactItemProps) => {
       (now.getTime() - date.getTime()) / (1000 * 60 * 60)
     )
 
-    if (contact.isOnline) return 'Online'
+    if (agent.isOnline) return 'Online'
     if (diffInHours < 1) return 'Just now'
     if (diffInHours < 24) return `${diffInHours}h ago`
     if (diffInHours < 168) return `${Math.floor(diffInHours / 24)}d ago`
@@ -25,41 +25,41 @@ const ContactItem = ({ contact, onClick }: ContactItemProps) => {
   return (
     <div
       className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors cursor-pointer group border-b border-gray-100 last:border-b-0"
-      onClick={() => onClick?.(contact)}
+      onClick={() => onClick?.(agent)}
     >
-      <ContactAvatar
-        name={contact.name}
-        avatar={contact.avatar}
-        isOnline={contact.isOnline}
+      <AgentAvatar
+        name={agent.name}
+        avatar={agent.avatar}
+        isOnline={agent.isOnline}
         size="md"
       />
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between mb-1">
           <h3 className="font-semibold text-gray-900 truncate">
-            {contact.name}
+            {agent.name}
           </h3>
           <span className="text-xs text-gray-500 flex-shrink-0">
-            {formatLastSeen(contact.lastSeen)}
+            {formatLastSeen(agent.lastSeen)}
           </span>
         </div>
 
         <div className="flex items-center gap-2 text-sm text-gray-600 mb-1">
           <Phone className="w-3 h-3" />
-          <span className="truncate">{contact.phone}</span>
+          <span className="truncate">{agent.phone}</span>
         </div>
 
-        {contact.email && (
+        {agent.email && (
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-1">
             <Mail className="w-3 h-3" />
-            <span className="truncate">{contact.email}</span>
+            <span className="truncate">{agent.email}</span>
           </div>
         )}
 
-        {contact.status && (
+        {agent.status && (
           <div className="flex items-center gap-2 text-sm text-gray-500">
             <MessageCircle className="w-3 h-3" />
-            <span className="truncate italic">{contact.status}</span>
+            <span className="truncate italic">{agent.status}</span>
           </div>
         )}
       </div>
@@ -71,4 +71,4 @@ const ContactItem = ({ contact, onClick }: ContactItemProps) => {
   )
 }
 
-export default ContactItem
+export default AgentItem

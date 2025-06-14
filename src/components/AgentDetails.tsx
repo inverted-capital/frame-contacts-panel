@@ -8,15 +8,15 @@ import {
   Clock,
   Shield
 } from 'lucide-react'
-import ContactAvatar from './ContactAvatar'
-import type { Contact } from '../types/contacts'
+import AgentAvatar from './AgentAvatar'
+import type { Agent } from '../types/agents'
 
-interface ContactDetailsProps {
-  contact: Contact
+interface AgentDetailsProps {
+  agent: Agent
   onClose: () => void
 }
 
-const ContactDetails = ({ contact, onClose }: ContactDetailsProps) => {
+const AgentDetails = ({ agent, onClose }: AgentDetailsProps) => {
   const formatLastSeen = (lastSeen: string) => {
     const date = new Date(lastSeen)
     const now = new Date()
@@ -24,7 +24,7 @@ const ContactDetails = ({ contact, onClose }: ContactDetailsProps) => {
       (now.getTime() - date.getTime()) / (1000 * 60 * 60)
     )
 
-    if (contact.isOnline) return 'Online now'
+    if (agent.isOnline) return 'Online now'
     if (diffInHours < 1) return 'Last seen just now'
     if (diffInHours < 24) return `Last seen ${diffInHours}h ago`
     if (diffInHours < 168)
@@ -33,7 +33,7 @@ const ContactDetails = ({ contact, onClose }: ContactDetailsProps) => {
   }
 
   const handleAction = (action: string) => {
-    console.log(`${action} action for ${contact.name}`)
+    console.log(`${action} action for ${agent.name}`)
     // In a real app, this would trigger the appropriate action
   }
 
@@ -50,22 +50,22 @@ const ContactDetails = ({ contact, onClose }: ContactDetailsProps) => {
           </button>
 
           <div className="flex flex-col items-center text-center">
-            <ContactAvatar
-              name={contact.name}
-              avatar={contact.avatar}
-              isOnline={contact.isOnline}
+            <AgentAvatar
+              name={agent.name}
+              avatar={agent.avatar}
+              isOnline={agent.isOnline}
               size="lg"
             />
-            <h2 className="text-2xl font-bold mt-4 mb-2">{contact.name}</h2>
+            <h2 className="text-2xl font-bold mt-4 mb-2">{agent.name}</h2>
             <div className="flex items-center gap-2 text-blue-100">
               <Clock className="w-4 h-4" />
               <span className="text-sm">
-                {formatLastSeen(contact.lastSeen)}
+                {formatLastSeen(agent.lastSeen)}
               </span>
             </div>
-            {contact.status && (
+            {agent.status && (
               <p className="text-blue-100 text-sm mt-2 italic">
-                "{contact.status}"
+                "{agent.status}"
               </p>
             )}
           </div>
@@ -104,10 +104,10 @@ const ContactDetails = ({ contact, onClose }: ContactDetailsProps) => {
           </button>
         </div>
 
-        {/* Contact Information */}
+        {/* Agent Information */}
         <div className="p-6 space-y-4">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Contact Info
+            Agent Info
           </h3>
 
           <div className="space-y-3">
@@ -117,18 +117,18 @@ const ContactDetails = ({ contact, onClose }: ContactDetailsProps) => {
               </div>
               <div className="flex-1">
                 <p className="text-sm text-gray-500">Phone</p>
-                <p className="font-medium text-gray-900">{contact.phone}</p>
+                <p className="font-medium text-gray-900">{agent.phone}</p>
               </div>
             </div>
 
-            {contact.email && (
+            {agent.email && (
               <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
                 <div className="p-2 bg-white rounded-lg shadow-sm">
                   <Mail className="w-4 h-4 text-gray-600" />
                 </div>
                 <div className="flex-1">
                   <p className="text-sm text-gray-500">Email</p>
-                  <p className="font-medium text-gray-900">{contact.email}</p>
+                  <p className="font-medium text-gray-900">{agent.email}</p>
                 </div>
               </div>
             )}
@@ -138,9 +138,9 @@ const ContactDetails = ({ contact, onClose }: ContactDetailsProps) => {
                 <User className="w-4 h-4 text-gray-600" />
               </div>
               <div className="flex-1">
-                <p className="text-sm text-gray-500">Contact ID</p>
+                <p className="text-sm text-gray-500">Agent ID</p>
                 <p className="font-medium text-gray-900 font-mono text-xs">
-                  {contact.id}
+                  {agent.id}
                 </p>
               </div>
             </div>
@@ -154,7 +154,7 @@ const ContactDetails = ({ contact, onClose }: ContactDetailsProps) => {
             className="w-full flex items-center justify-center gap-2 p-3 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
           >
             <Shield className="w-4 h-4" />
-            <span className="font-medium">Block Contact</span>
+            <span className="font-medium">Block Agent</span>
           </button>
         </div>
       </div>
@@ -162,4 +162,4 @@ const ContactDetails = ({ contact, onClose }: ContactDetailsProps) => {
   )
 }
 
-export default ContactDetails
+export default AgentDetails

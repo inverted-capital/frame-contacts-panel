@@ -3,17 +3,17 @@ import { createRoot } from 'react-dom/client'
 import { ArtifactFrame, ArtifactSyncer } from '@artifact/client/react'
 import { HOST_SCOPE } from '@artifact/client/api'
 import App from './App.tsx'
-import type { ContactsData } from './types/contacts'
+import type { AgentsData } from './types/agents'
 import './index.css'
 
-const mockContacts: ContactsData = {
-  contacts: [
+const mockAgents: AgentsData = {
+  agents: [
     {
       id: '1',
       name: 'Alice Johnson',
       phone: '+1 (555) 123-4567',
       email: 'alice.johnson@email.com',
-      status: 'Hey there! I am using WhatsApp.',
+      status: 'Available for assignments',
       lastSeen: new Date(Date.now() - 30 * 60 * 1000).toISOString(), // 30 minutes ago
       isOnline: true
     },
@@ -22,7 +22,7 @@ const mockContacts: ContactsData = {
       name: 'Bob Smith',
       phone: '+1 (555) 234-5678',
       email: 'bob.smith@email.com',
-      status: 'Busy at work 💼',
+      status: 'On mission 🎯',
       lastSeen: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
       isOnline: false
     },
@@ -31,7 +31,7 @@ const mockContacts: ContactsData = {
       name: 'Carol Davis',
       phone: '+1 (555) 345-6789',
       email: 'carol.davis@email.com',
-      status: 'Coffee lover ☕',
+      status: 'Standby mode ⚡',
       lastSeen: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 minutes ago
       isOnline: true
     },
@@ -39,7 +39,7 @@ const mockContacts: ContactsData = {
       id: '4',
       name: 'David Wilson',
       phone: '+1 (555) 456-7890',
-      status: 'Available',
+      status: 'Ready for deployment',
       lastSeen: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
       isOnline: false
     },
@@ -48,7 +48,7 @@ const mockContacts: ContactsData = {
       name: 'Emma Brown',
       phone: '+1 (555) 567-8901',
       email: 'emma.brown@email.com',
-      status: 'On vacation 🌴',
+      status: 'Training mode 📚',
       lastSeen: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), // 3 days ago
       isOnline: false
     },
@@ -57,7 +57,7 @@ const mockContacts: ContactsData = {
       name: 'Frank Miller',
       phone: '+1 (555) 678-9012',
       email: 'frank.miller@email.com',
-      status: "Can't talk, WhatsApp only",
+      status: 'Secure communications only',
       lastSeen: new Date(Date.now() - 15 * 60 * 1000).toISOString(), // 15 minutes ago
       isOnline: true
     },
@@ -65,7 +65,7 @@ const mockContacts: ContactsData = {
       id: '7',
       name: 'Grace Taylor',
       phone: '+1 (555) 789-0123',
-      status: 'Living my best life ✨',
+      status: 'Field operations active 🌟',
       lastSeen: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(), // 6 hours ago
       isOnline: false
     },
@@ -84,7 +84,7 @@ const mockContacts: ContactsData = {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ArtifactFrame
-      mockRepos={{ mock: { main: { 'contacts.json': mockContacts } } }}
+      mockRepos={{ mock: { main: { 'agents.json': mockAgents } } }}
       mockFrameProps={{
         target: { did: HOST_SCOPE.did, repo: 'mock', branch: 'main' }
       }}
