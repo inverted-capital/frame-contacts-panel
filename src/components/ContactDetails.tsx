@@ -1,4 +1,13 @@
-import { X, Phone, MessageCircle, Mail, Video, User, Clock, Shield } from 'lucide-react'
+import {
+  X,
+  Phone,
+  MessageCircle,
+  Mail,
+  Video,
+  User,
+  Clock,
+  Shield
+} from 'lucide-react'
 import ContactAvatar from './ContactAvatar'
 import type { Contact } from '../types/contacts'
 
@@ -11,12 +20,15 @@ const ContactDetails = ({ contact, onClose }: ContactDetailsProps) => {
   const formatLastSeen = (lastSeen: string) => {
     const date = new Date(lastSeen)
     const now = new Date()
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60))
-    
+    const diffInHours = Math.floor(
+      (now.getTime() - date.getTime()) / (1000 * 60 * 60)
+    )
+
     if (contact.isOnline) return 'Online now'
     if (diffInHours < 1) return 'Last seen just now'
     if (diffInHours < 24) return `Last seen ${diffInHours}h ago`
-    if (diffInHours < 168) return `Last seen ${Math.floor(diffInHours / 24)}d ago`
+    if (diffInHours < 168)
+      return `Last seen ${Math.floor(diffInHours / 24)}d ago`
     return `Last seen ${date.toLocaleDateString()}`
   }
 
@@ -36,21 +48,25 @@ const ContactDetails = ({ contact, onClose }: ContactDetailsProps) => {
           >
             <X className="w-5 h-5" />
           </button>
-          
+
           <div className="flex flex-col items-center text-center">
-            <ContactAvatar 
-              name={contact.name} 
-              avatar={contact.avatar} 
+            <ContactAvatar
+              name={contact.name}
+              avatar={contact.avatar}
               isOnline={contact.isOnline}
               size="lg"
             />
             <h2 className="text-2xl font-bold mt-4 mb-2">{contact.name}</h2>
             <div className="flex items-center gap-2 text-blue-100">
               <Clock className="w-4 h-4" />
-              <span className="text-sm">{formatLastSeen(contact.lastSeen)}</span>
+              <span className="text-sm">
+                {formatLastSeen(contact.lastSeen)}
+              </span>
             </div>
             {contact.status && (
-              <p className="text-blue-100 text-sm mt-2 italic">"{contact.status}"</p>
+              <p className="text-blue-100 text-sm mt-2 italic">
+                "{contact.status}"
+              </p>
             )}
           </div>
         </div>
@@ -66,7 +82,7 @@ const ContactDetails = ({ contact, onClose }: ContactDetailsProps) => {
             </div>
             <span className="text-sm font-medium text-gray-700">Call</span>
           </button>
-          
+
           <button
             onClick={() => handleAction('video')}
             className="flex flex-col items-center gap-2 p-3 hover:bg-blue-50 rounded-xl transition-colors group"
@@ -76,7 +92,7 @@ const ContactDetails = ({ contact, onClose }: ContactDetailsProps) => {
             </div>
             <span className="text-sm font-medium text-gray-700">Video</span>
           </button>
-          
+
           <button
             onClick={() => handleAction('message')}
             className="flex flex-col items-center gap-2 p-3 hover:bg-purple-50 rounded-xl transition-colors group"
@@ -90,8 +106,10 @@ const ContactDetails = ({ contact, onClose }: ContactDetailsProps) => {
 
         {/* Contact Information */}
         <div className="p-6 space-y-4">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Contact Info</h3>
-          
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            Contact Info
+          </h3>
+
           <div className="space-y-3">
             <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
               <div className="p-2 bg-white rounded-lg shadow-sm">
@@ -102,7 +120,7 @@ const ContactDetails = ({ contact, onClose }: ContactDetailsProps) => {
                 <p className="font-medium text-gray-900">{contact.phone}</p>
               </div>
             </div>
-            
+
             {contact.email && (
               <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
                 <div className="p-2 bg-white rounded-lg shadow-sm">
@@ -114,14 +132,16 @@ const ContactDetails = ({ contact, onClose }: ContactDetailsProps) => {
                 </div>
               </div>
             )}
-            
+
             <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
               <div className="p-2 bg-white rounded-lg shadow-sm">
                 <User className="w-4 h-4 text-gray-600" />
               </div>
               <div className="flex-1">
                 <p className="text-sm text-gray-500">Contact ID</p>
-                <p className="font-medium text-gray-900 font-mono text-xs">{contact.id}</p>
+                <p className="font-medium text-gray-900 font-mono text-xs">
+                  {contact.id}
+                </p>
               </div>
             </div>
           </div>

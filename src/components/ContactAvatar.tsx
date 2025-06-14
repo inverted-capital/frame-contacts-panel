@@ -1,5 +1,3 @@
-import { User } from 'lucide-react'
-
 interface ContactAvatarProps {
   name: string
   avatar?: string
@@ -7,7 +5,12 @@ interface ContactAvatarProps {
   size?: 'sm' | 'md' | 'lg'
 }
 
-const ContactAvatar = ({ name, avatar, isOnline, size = 'md' }: ContactAvatarProps) => {
+const ContactAvatar = ({
+  name,
+  avatar,
+  isOnline,
+  size = 'md'
+}: ContactAvatarProps) => {
   const sizeClasses = {
     sm: 'w-8 h-8 text-xs',
     md: 'w-12 h-12 text-sm',
@@ -15,15 +18,22 @@ const ContactAvatar = ({ name, avatar, isOnline, size = 'md' }: ContactAvatarPro
   }
 
   const getInitials = (name: string) => {
-    return name.split(' ').map(part => part[0]).join('').toUpperCase().slice(0, 2)
+    return name
+      .split(' ')
+      .map((part) => part[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2)
   }
 
   return (
     <div className="relative">
-      <div className={`${sizeClasses[size]} rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold shadow-lg`}>
+      <div
+        className={`${sizeClasses[size]} rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold shadow-lg`}
+      >
         {avatar ? (
-          <img 
-            src={avatar} 
+          <img
+            src={avatar}
             alt={name}
             className="w-full h-full rounded-full object-cover"
           />

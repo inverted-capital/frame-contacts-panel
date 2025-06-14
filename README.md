@@ -1,7 +1,7 @@
-# starter-widget
+# Contacts widget
 
 This repo demonstrates a minimal setup for building an Artifact widget. It loads
-and saves a custom `profile.json` file checked against a Zod schema. If the file
+and saves a custom `contacts.json` file checked against a Zod schema. If the file
 is missing a default one is written automatically.
 
 ## Development
@@ -21,13 +21,13 @@ another application.
 
 ### Data shape
 
-The profile data is defined in `src/types/account.ts`:
+The contacts data is defined in `src/types/contacts.ts`:
 
 ```ts
-export const accountDataSchema = z.object({
-  name: z.string()
+export const contactsDataSchema = z.object({
+  contacts: z.array(contactSchema),
+  lastUpdated: z.string()
 })
 ```
 
-The widget exposes a single input that edits this value and saves it back to
-`profile.json`.
+The widget exposes a simple interface to manage and view contact information.
