@@ -1,30 +1,17 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { Users, UserPlus } from 'lucide-react'
 import useContactsData from './hooks/useContactsData'
-import useContactsSaver from './hooks/useContactsSaver'
 import SearchBar from './components/SearchBar'
 import SortDropdown, { type SortOption } from './components/SortDropdown'
 import ContactItem from './components/ContactItem'
 import ContactDetails from './components/ContactDetails'
-import type { ContactsData, Contact } from './types/contacts'
-
-const defaultContacts: ContactsData = {
-  contacts: [],
-  lastUpdated: new Date().toISOString()
-}
+import type { Contact } from './types/contacts'
 
 export default function App() {
-  const { data, loading, error } = useContactsData()
-  const save = useContactsSaver()
+  const { data, loading } = useContactsData()
   const [searchQuery, setSearchQuery] = useState('')
   const [sortBy, setSortBy] = useState<SortOption>('name')
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null)
-
-  useEffect(() => {
-    if (error === 'contacts.json not found') {
-      save(defaultContacts)
-    }
-  }, [error, save])
 
   const filteredAndSortedContacts = useMemo(() => {
     if (!data?.contacts) return []

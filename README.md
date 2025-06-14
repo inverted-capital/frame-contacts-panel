@@ -1,8 +1,9 @@
 # Contacts widget
 
-This repo demonstrates a minimal setup for building an Artifact widget. It loads
-and saves a custom `contacts.json` file checked against a Zod schema. If the file
-is missing a default one is written automatically.
+This repo demonstrates a minimal setup for building an Artifact widget. Contact
+information is stored as individual JSON files inside a `contacts` directory. Ea
+ch file is named using a ULID (`[ulid].json`) and validated against a Zod schema
+when written.
 
 ## Development
 
