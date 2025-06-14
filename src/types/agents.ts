@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const agentSchema = z.object({
+const agentSchema = z.object({
   id: z.string(),
   name: z.string(),
   phone: z.string(),
