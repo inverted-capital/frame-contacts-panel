@@ -9,7 +9,7 @@ interface SearchBarProps {
 const SearchBar = ({
   value,
   onChange,
-  placeholder = 'Search agents...'
+  placeholder = 'Search contacts...'
 }: SearchBarProps) => {
   return (
     <div className="relative">

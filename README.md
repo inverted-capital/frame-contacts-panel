@@ -1,7 +1,7 @@
-# Agents widget
+# Contacts widget
 
 This repo demonstrates a minimal setup for building an Artifact widget. It loads
-and saves a custom `agents.json` file checked against a Zod schema. If the file
+and saves a custom `contacts.json` file checked against a Zod schema. If the file
 is missing a default one is written automatically.
 
 ## Development
@@ -21,13 +21,13 @@ another application.
 
 ### Data shape
 
-The agents data is defined in `src/types/agents.ts`:
+The contacts data is defined in `src/types/contacts.ts`:
 
 ```ts
-export const agentsDataSchema = z.object({
-  agents: z.array(agentSchema),
+export const contactsDataSchema = z.object({
+  contacts: z.array(contactSchema),
   lastUpdated: z.string()
 })
 ```
 
-The widget exposes a simple interface to manage and view agent information.
+The widget exposes a simple interface to manage and view contact information.

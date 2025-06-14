@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-const agentSchema = z.object({
+export const contactSchema = z.object({
   id: z.string(),
   name: z.string(),
   phone: z.string(),
@@ -11,10 +11,10 @@ const agentSchema = z.object({
   isOnline: z.boolean().default(false)
 })
 
-export const agentsDataSchema = z.object({
-  agents: z.array(agentSchema),
+export const contactsDataSchema = z.object({
+  contacts: z.array(contactSchema),
   lastUpdated: z.string()
 })
 
-export type Agent = z.infer<typeof agentSchema>
-export type AgentsData = z.infer<typeof agentsDataSchema>
+export type Contact = z.infer<typeof contactSchema>
+export type ContactsData = z.infer<typeof contactsDataSchema>
