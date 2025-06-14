@@ -6,7 +6,11 @@ interface SearchBarProps {
   placeholder?: string
 }
 
-const SearchBar = ({ value, onChange, placeholder = "Search contacts..." }: SearchBarProps) => {
+const SearchBar = ({
+  value,
+  onChange,
+  placeholder = 'Search contacts...'
+}: SearchBarProps) => {
   return (
     <div className="relative">
       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

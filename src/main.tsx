@@ -57,7 +57,7 @@ const mockContacts: ContactsData = {
       name: 'Frank Miller',
       phone: '+1 (555) 678-9012',
       email: 'frank.miller@email.com',
-      status: 'Can\'t talk, WhatsApp only',
+      status: "Can't talk, WhatsApp only",
       lastSeen: new Date(Date.now() - 15 * 60 * 1000).toISOString(), // 15 minutes ago
       isOnline: true
     },
