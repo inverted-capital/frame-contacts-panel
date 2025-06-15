@@ -1,13 +1,30 @@
 import { Phone, Mail, MessageCircle } from 'lucide-react'
+import { useTypedFile } from '@artifact/client/hooks'
 import ContactAvatar from './ContactAvatar'
+import { contactSchema } from '../types/contacts'
 import type { Contact } from '../types/contacts'
 
 interface ContactItemProps {
-  contact: Contact
+  file: string
   onClick?: (contact: Contact) => void
 }
 
-const ContactItem = ({ contact, onClick }: ContactItemProps) => {
+const ContactItem = ({ file, onClick }: ContactItemProps) => {
+  const contact = useTypedFile(`contacts/${file}`, contactSchema) as
+    | Contact
+    | undefined
+  if (!contact) {
+    return (
+      <div className="flex items-center gap-4 p-4 border-b border-gray-100 last:border-b-0 animate-pulse">
+        <div className="w-12 h-12 bg-gray-200 rounded-full" />
+        <div className="flex-1 space-y-2">
+          <div className="h-4 bg-gray-200 rounded w-1/3" />
+          <div className="h-3 bg-gray-100 rounded w-1/2" />
+        </div>
+      </div>
+    )
+  }
+
   const formatLastSeen = (lastSeen: string) => {
     const date = new Date(lastSeen)
     const now = new Date()

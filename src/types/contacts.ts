@@ -12,8 +12,7 @@ export const contactSchema = z.object({
 })
 
 export const contactsDataSchema = z.object({
-  contacts: z.array(contactSchema),
-  lastUpdated: z.string()
+  contacts: z.array(contactSchema)
 })
 
 export type Contact = z.infer<typeof contactSchema>
