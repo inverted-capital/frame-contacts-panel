@@ -20,26 +20,28 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
-    
+
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required'
     }
-    
-    if (formData.phone && !/^\+?[\d\s\-\(\)]+$/.test(formData.phone)) {
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required'
+    } else if (!/^\+?[\d\s-()]+$/.test(formData.phone)) {
       newErrors.phone = 'Please enter a valid phone number'
     }
-    
+
     if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email address'
     }
-    
+
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
   const handleSave = async () => {
     if (!validateForm()) return
-    
+
     setIsSaving(true)
     try {
       await onSave({
@@ -49,7 +51,7 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
         status: formData.status.trim() || undefined,
         isOnline: false // Default to offline for new agents
       })
-      
+
       // Reset form
       setFormData({
         name: '',
@@ -66,11 +68,11 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
     }
   }
 
-  const handleChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
+  const handleChange = (field: string, value: string | boolean) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
     // Clear error when user starts typing
     if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: '' }))
+      setErrors((prev) => ({ ...prev, [field]: '' }))
     }
   }
 
@@ -88,7 +90,7 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
           >
             <X className="w-5 h-5" />
           </button>
-          
+
           <div className="flex items-center gap-3">
             <div className="p-3 bg-white bg-opacity-20 rounded-xl">
               <User className="w-6 h-6" />
@@ -115,13 +117,17 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
                 value={formData.name}
                 onChange={(e) => handleChange('name', e.target.value)}
                 className={`block w-full pl-10 pr-3 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                  errors.name ? 'border-red-300 bg-red-50' : 'border-gray-200 bg-gray-50 focus:bg-white'
+                  errors.name
+                    ? 'border-red-300 bg-red-50'
+                    : 'border-gray-200 bg-gray-50 focus:bg-white'
                 }`}
                 placeholder="Enter agent name"
                 disabled={isSaving}
               />
             </div>
-            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+            )}
           </div>
 
           <div>
@@ -137,13 +143,17 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
                 value={formData.phone}
                 onChange={(e) => handleChange('phone', e.target.value)}
                 className={`block w-full pl-10 pr-3 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                  errors.phone ? 'border-red-300 bg-red-50' : 'border-gray-200 bg-gray-50 focus:bg-white'
+                  errors.phone
+                    ? 'border-red-300 bg-red-50'
+                    : 'border-gray-200 bg-gray-50 focus:bg-white'
                 }`}
                 placeholder="+1 (555) 123-4567"
                 disabled={isSaving}
               />
             </div>
-            {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+            {errors.phone && (
+              <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+            )}
           </div>
 
           <div>
@@ -159,13 +169,17 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
                 value={formData.email}
                 onChange={(e) => handleChange('email', e.target.value)}
                 className={`block w-full pl-10 pr-3 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                  errors.email ? 'border-red-300 bg-red-50' : 'border-gray-200 bg-gray-50 focus:bg-white'
+                  errors.email
+                    ? 'border-red-300 bg-red-50'
+                    : 'border-gray-200 bg-gray-50 focus:bg-white'
                 }`}
                 placeholder="agent@email.com"
                 disabled={isSaving}
               />
             </div>
-            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            )}
           </div>
 
           <div>
@@ -185,6 +199,22 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
                 disabled={isSaving}
               />
             </div>
+          </div>
+          <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+            <input
+              type="checkbox"
+              id="isOnline"
+              checked={formData.isOnline}
+              onChange={(e) => handleChange('isOnline', e.target.checked)}
+              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              disabled={isSaving}
+            />
+            <label
+              htmlFor="isOnline"
+              className="text-sm font-medium text-gray-700"
+            >
+              Agent is currently online
+            </label>
           </div>
         </div>
 

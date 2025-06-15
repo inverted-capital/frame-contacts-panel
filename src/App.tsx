@@ -55,9 +55,15 @@ export default function App() {
   }
 
   const handleAddAgent = async (agentData: Omit<Agent, 'id' | 'lastSeen'>) => {
-    await saveAgent({
+    if (!data) return
+    const newAgent: Agent = {
       ...agentData,
+      id: String(data.agents.length + 1),
       lastSeen: new Date().toISOString()
+    }
+    await saveAgent({
+      agents: [...data.agents, newAgent],
+      lastUpdated: new Date().toISOString()
     })
   }
 
@@ -93,7 +99,7 @@ export default function App() {
                   </p>
                 </div>
               </div>
-              <button 
+              <button
                 onClick={() => setIsAddModalOpen(true)}
                 className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
@@ -138,7 +144,7 @@ export default function App() {
                   <p className="text-gray-500 mb-4">
                     Start by adding your first agent
                   </p>
-                  <button 
+                  <button
                     onClick={() => setIsAddModalOpen(true)}
                     className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                   >
@@ -164,10 +170,7 @@ export default function App() {
 
       {/* Agent Details Modal */}
       {selectedAgent && (
-        <AgentDetails
-          agent={selectedAgent}
-          onClose={handleCloseDetails}
-        />
+        <AgentDetails agent={selectedAgent} onClose={handleCloseDetails} />
       )}
 
       {/* Add Agent Modal */}

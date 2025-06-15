@@ -36,9 +36,7 @@ const AgentItem = ({ agent, onClick }: AgentItemProps) => {
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between mb-1">
-          <h3 className="font-semibold text-gray-900 truncate">
-            {agent.name}
-          </h3>
+          <h3 className="font-semibold text-gray-900 truncate">{agent.name}</h3>
           <span className="text-xs text-gray-500 flex-shrink-0">
             {formatLastSeen(agent.lastSeen)}
           </span>
