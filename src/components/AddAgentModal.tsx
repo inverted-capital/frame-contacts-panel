@@ -13,8 +13,7 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
     name: '',
     phone: '',
     email: '',
-    status: '',
-    isOnline: false
+    status: ''
   })
   const [isSaving, setIsSaving] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -47,10 +46,10 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
     try {
       await onSave({
         name: formData.name.trim(),
-        phone: formData.phone.trim(),
+        phone: formData.phone.trim() || '',
         email: formData.email.trim() || undefined,
         status: formData.status.trim() || undefined,
-        isOnline: formData.isOnline
+        isOnline: false // Default to offline for new agents
       })
 
       // Reset form
@@ -58,8 +57,7 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
         name: '',
         phone: '',
         email: '',
-        status: '',
-        isOnline: false
+        status: ''
       })
       setErrors({})
       onClose()
@@ -134,7 +132,7 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Phone Number *
+              Phone Number (Optional)
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -202,7 +200,6 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
               />
             </div>
           </div>
-
           <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
             <input
               type="checkbox"
