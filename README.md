@@ -32,8 +32,7 @@ When the widget loads, these files are combined into an object shaped like:
 
 ```ts
 export const contactsDataSchema = z.object({
-  contacts: z.array(contactSchema),
-  lastUpdated: z.string()
+  contacts: z.array(contactSchema)
 })
 ```
 

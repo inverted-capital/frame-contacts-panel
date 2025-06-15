@@ -1,19 +1,20 @@
 import { useState } from 'react'
 import { X, User, Phone, Mail, MessageCircle } from 'lucide-react'
-import type { Agent } from '../types/agents'
+import type { Contact } from '../types/contacts'
 
-interface AddAgentModalProps {
+interface AddContactModalProps {
   isOpen: boolean
   onClose: () => void
-  onSave: (agent: Omit<Agent, 'id' | 'lastSeen'>) => Promise<void>
+  onSave: (contact: Omit<Contact, 'id' | 'lastSeen'>) => Promise<void>
 }
 
-const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
+const AddContactModal = ({ isOpen, onClose, onSave }: AddContactModalProps) => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     email: '',
-    status: ''
+    status: '',
+    isOnline: false
   })
   const [isSaving, setIsSaving] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -49,7 +50,7 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
         phone: formData.phone.trim() || '',
         email: formData.email.trim() || undefined,
         status: formData.status.trim() || undefined,
-        isOnline: false // Default to offline for new agents
+        isOnline: false // Default to offline for new contacts
       })
 
       // Reset form
@@ -57,12 +58,13 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
         name: '',
         phone: '',
         email: '',
-        status: ''
+        status: '',
+        isOnline: false
       })
       setErrors({})
       onClose()
     } catch (error) {
-      console.error('Failed to save agent:', error)
+      console.error('Failed to save contact:', error)
     } finally {
       setIsSaving(false)
     }
@@ -96,8 +98,10 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
               <User className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold">Add New Agent</h2>
-              <p className="text-blue-100 text-sm">Fill in the agent details</p>
+              <h2 className="text-2xl font-bold">Add New Contact</h2>
+              <p className="text-blue-100 text-sm">
+                Fill in the contact details
+              </p>
             </div>
           </div>
         </div>
@@ -121,7 +125,7 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
                     ? 'border-red-300 bg-red-50'
                     : 'border-gray-200 bg-gray-50 focus:bg-white'
                 }`}
-                placeholder="Enter agent name"
+                placeholder="Enter contact name"
                 disabled={isSaving}
               />
             </div>
@@ -173,7 +177,7 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
                     ? 'border-red-300 bg-red-50'
                     : 'border-gray-200 bg-gray-50 focus:bg-white'
                 }`}
-                placeholder="agent@email.com"
+                placeholder="contact@email.com"
                 disabled={isSaving}
               />
             </div>
@@ -213,7 +217,7 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
               htmlFor="isOnline"
               className="text-sm font-medium text-gray-700"
             >
-              Agent is currently online
+              Contact is currently online
             </label>
           </div>
         </div>
@@ -232,7 +236,7 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
             className="flex-1 px-4 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={isSaving}
           >
-            {isSaving ? 'Saving...' : 'Add Agent'}
+            {isSaving ? 'Saving...' : 'Add Contact'}
           </button>
         </div>
       </div>
@@ -240,4 +244,4 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
   )
 }
 
-export default AddAgentModal
+export default AddContactModal

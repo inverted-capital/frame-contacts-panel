@@ -10,7 +10,7 @@ const useContactsData = () => {
 
   const contacts = useMemo(() => {
     if (!metas || !store) return undefined
-    const list: Contact[] = []
+    const list: (Contact & { file: string })[] = []
     for (const meta of metas) {
       if (meta.type !== 'blob' || !meta.path.endsWith('.json')) continue
       const raw = store
@@ -20,7 +20,7 @@ const useContactsData = () => {
         )
       if (!raw) continue
       try {
-        list.push(contactSchema.parse(raw))
+        list.push({ ...contactSchema.parse(raw), file: meta.path })
       } catch {
         // ignore invalid files
       }
@@ -28,10 +28,7 @@ const useContactsData = () => {
     return list
   }, [metas, store])
 
-  const data =
-    contacts === undefined
-      ? undefined
-      : { contacts, lastUpdated: new Date().toISOString() }
+  const data = contacts === undefined ? undefined : { contacts }
 
   const loading = exists === null || (exists && metas === undefined)
   const error = exists === false ? 'contacts folder not found' : null
