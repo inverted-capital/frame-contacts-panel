@@ -1,12 +1,18 @@
 import { useArtifact } from '@artifact/client/hooks'
-import type { ContactsData } from '../types/contacts.ts'
+import { ulid } from 'ulid'
+import { contactSchema } from '../types/contacts.ts'
+import type { Contact } from '../types/contacts.ts'
 
 const useContactsSaver = () => {
   const artifact = useArtifact()
 
-  return async (data: ContactsData): Promise<void> => {
-    artifact.files.write.json('contacts.json', data)
-    await artifact.branch.write.commit('Update contacts data')
+  return async (contact: unknown): Promise<Contact> => {
+    const parsed = contactSchema.parse(contact)
+    const id = ulid()
+    const file = `contacts/${id}.json`
+    artifact.files.write.json(file, { ...parsed, id })
+    await artifact.branch.write.commit('Add contact')
+    return { ...parsed, id }
   }
 }
 

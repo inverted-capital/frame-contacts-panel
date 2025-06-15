@@ -1,20 +1,40 @@
-import { useExists, useJson } from '@artifact/client/hooks'
-import { contactsDataSchema } from '../types/contacts.ts'
-import { useMemo } from 'react'
+import { ArtifactContext, useDir, useExists } from '@artifact/client/hooks'
+import { useContext, useMemo } from 'react'
+import { contactSchema } from '../types/contacts.ts'
+import type { Contact } from '../types/contacts.ts'
 
 const useContactsData = () => {
-  const exists = useExists('contacts.json')
-  const raw = useJson('contacts.json')
+  const { store } = useContext(ArtifactContext)
+  const exists = useExists('contacts')
+  const metas = useDir('contacts')
 
-  const data = useMemo(() => {
-    if (raw !== undefined) {
-      return contactsDataSchema.parse(raw)
+  const contacts = useMemo(() => {
+    if (!metas || !store) return undefined
+    const list: Contact[] = []
+    for (const meta of metas) {
+      if (meta.type !== 'blob' || !meta.path.endsWith('.json')) continue
+      const raw = store
+        .getState()
+        .readFile(`contacts/${meta.path}`, (b) =>
+          JSON.parse(new TextDecoder().decode(b))
+        )
+      if (!raw) continue
+      try {
+        list.push(contactSchema.parse(raw))
+      } catch {
+        // ignore invalid files
+      }
     }
-    return undefined
-  }, [raw])
+    return list
+  }, [metas, store])
 
-  const loading = exists === null || (exists && raw === undefined)
-  const error = exists === false ? 'contacts.json not found' : null
+  const data =
+    contacts === undefined
+      ? undefined
+      : { contacts, lastUpdated: new Date().toISOString() }
+
+  const loading = exists === null || (exists && metas === undefined)
+  const error = exists === false ? 'contacts folder not found' : null
 
   return { data, loading, error }
 }
