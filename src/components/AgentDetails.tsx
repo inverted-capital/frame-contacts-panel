@@ -59,9 +59,7 @@ const AgentDetails = ({ agent, onClose }: AgentDetailsProps) => {
             <h2 className="text-2xl font-bold mt-4 mb-2">{agent.name}</h2>
             <div className="flex items-center gap-2 text-blue-100">
               <Clock className="w-4 h-4" />
-              <span className="text-sm">
-                {formatLastSeen(agent.lastSeen)}
-              </span>
+              <span className="text-sm">{formatLastSeen(agent.lastSeen)}</span>
             </div>
             {agent.status && (
               <p className="text-blue-100 text-sm mt-2 italic">
