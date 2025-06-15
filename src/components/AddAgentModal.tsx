@@ -13,8 +13,7 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
     name: '',
     phone: '',
     email: '',
-    status: '',
-    isOnline: false
+    status: ''
   })
   const [isSaving, setIsSaving] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -26,9 +25,7 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
       newErrors.name = 'Name is required'
     }
     
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone number is required'
-    } else if (!/^\+?[\d\s\-\(\)]+$/.test(formData.phone)) {
+    if (formData.phone && !/^\+?[\d\s\-\(\)]+$/.test(formData.phone)) {
       newErrors.phone = 'Please enter a valid phone number'
     }
     
@@ -47,10 +44,10 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
     try {
       await onSave({
         name: formData.name.trim(),
-        phone: formData.phone.trim(),
+        phone: formData.phone.trim() || '',
         email: formData.email.trim() || undefined,
         status: formData.status.trim() || undefined,
-        isOnline: formData.isOnline
+        isOnline: false // Default to offline for new agents
       })
       
       // Reset form
@@ -58,8 +55,7 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
         name: '',
         phone: '',
         email: '',
-        status: '',
-        isOnline: false
+        status: ''
       })
       setErrors({})
       onClose()
@@ -70,7 +66,7 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
     }
   }
 
-  const handleChange = (field: string, value: string | boolean) => {
+  const handleChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
     // Clear error when user starts typing
     if (errors[field]) {
@@ -130,7 +126,7 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Phone Number *
+              Phone Number (Optional)
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -189,20 +185,6 @@ const AddAgentModal = ({ isOpen, onClose, onSave }: AddAgentModalProps) => {
                 disabled={isSaving}
               />
             </div>
-          </div>
-
-          <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-            <input
-              type="checkbox"
-              id="isOnline"
-              checked={formData.isOnline}
-              onChange={(e) => handleChange('isOnline', e.target.checked)}
-              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              disabled={isSaving}
-            />
-            <label htmlFor="isOnline" className="text-sm font-medium text-gray-700">
-              Agent is currently online
-            </label>
           </div>
         </div>
 
