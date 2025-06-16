@@ -10,9 +10,9 @@ interface ContactItemProps {
 }
 
 const ContactItem = ({ file, onClick }: ContactItemProps) => {
-  const contact = useTypedFile(`contacts/${file}`, contactSchema) as
-    | Contact
-    | undefined
+  const contact = useTypedFile(`contacts/${file}`, (data) =>
+    contactSchema.parse(data)
+  ) as Contact | undefined
   if (!contact) {
     return (
       <div className="flex items-center gap-4 p-4 border-b border-gray-100 last:border-b-0 animate-pulse">
