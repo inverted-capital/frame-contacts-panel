@@ -5,6 +5,7 @@ import type { Contact } from '../types/contacts.ts'
 
 const useContactsSaver = () => {
   const artifact = useArtifact()
+  if (!artifact) throw new Error('Artifact not ready')
 
   return async (contact: unknown): Promise<Contact> => {
     const parsed = contactSchema.parse(contact)
