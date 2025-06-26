@@ -39,7 +39,7 @@ const ContactDetails = ({ contact, onClose }: ContactDetailsProps) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-hidden">
+      <div className="bg-white rounded-2xl shadow-xl max-w-md w-full max-h-[90vh]">
         {/* Header */}
         <div className="relative bg-gradient-to-br from-blue-500 to-purple-600 p-6 text-white">
           <button

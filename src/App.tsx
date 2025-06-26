@@ -148,7 +148,7 @@ export default function App() {
               )}
             </div>
           ) : (
-            <div className="bg-white mx-4 mb-4 rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div className="bg-white mx-4 mb-4 rounded-xl shadow-sm border border-gray-200">
               {filteredAndSortedContacts.map((contact) => (
                 <ContactItem
                   key={contact.id}
